@@ -2,6 +2,7 @@
 #include "nav_msgs/Odometry.h"
 #include "geometry_msgs/PoseStamped.h"
 
+#include "beat/tools.h"
 /**
  * This tutorial demonstrates simple receipt of position and speed of the Evarobot over the ROS system.
  */
@@ -45,7 +46,7 @@ int main(int argc, char **argv)
    * You must call one of the versions of ros::init() before using any other
    * part of the ROS system.
    */
-  ros::init(argc, argv, "odom_listener");
+  ros::init(argc, argv, "listen");
 
   /**
    * NodeHandle is the main access point to communications with the ROS system.
@@ -72,17 +73,18 @@ int main(int argc, char **argv)
    * is the number of messages that will be buffered up before beginning to throw
    * away the oldest ones.
    */
-//  ros::Subscriber sub = n.subscribe("odom", 1000, chatterCallback);
+  //ros::Subscriber sub = n.subscribe("odom", 1000, chatterCallback);
   ros::Subscriber sub = n.subscribe("robot_pose", 1000, poseCallback);
-  ros::Subscriber sub2 = n.subscribe("/current_goal", 1000, goalCallback);
+  //ros::Subscriber sub2 = n.subscribe("/current_goal", 1000, goalCallback);
 
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
    * callbacks will be called from within this thread (the main one).  ros::spin()
    * will exit when Ctrl-C is pressed, or the node is shutdown by the master.
    */
-//  ros::spin();
+  //ros::spin();
   ros::Rate loop_rate(controller_frequency_);
+
   while(ros::ok()){
     ros::spinOnce();
     loop_rate.sleep();

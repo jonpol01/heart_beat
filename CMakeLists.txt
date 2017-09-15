@@ -112,7 +112,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-# include_directories(include)
+include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
@@ -129,13 +129,13 @@ include_directories(
 
 ## Declare a C++ executable
 # add_executable(heart_beat_node src/heart_beat_node.cpp)
-add_executable(odom_listener src/odom_listener.cpp)
+add_executable(listen src/pose_listener.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(heart_beat_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-add_dependencies(odom_listener nav_msgs_generate_messages_cpp)
- target_link_libraries(odom_listener
+add_dependencies(listen nav_msgs_generate_messages_cpp)
+ target_link_libraries(listen
    ${catkin_LIBRARIES}
 )
 
