@@ -1,13 +1,9 @@
-#include "ros/ros.h"
-
 #include "beat/tools.h"
 
 
 int main(int argc, char **argv)
 {
-  Pathfinder::util util;
-  double controller_frequency_;
-
+  Pathfinder::Utils util;
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -28,7 +24,7 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
 
   //basic parameters
-  n.param("controller_frequency", controller_frequency_, 0.5); //5x per second
+  n.param("controller_frequency", util.controller_frequency_, 0.5); //5x per second
 
   /**
    * The subscribe() call is how you tell ROS that you want to receive messages
@@ -46,7 +42,7 @@ int main(int argc, char **argv)
    * away the oldest ones.
    */
   //ros::Subscriber sub = n.subscribe("odom", 1000, chatterCallback);
-  ros::Subscriber sub = n.subscribe("robot_pose", 1000, util.poseCallback);
+  ros::Subscriber sub = n.subscribe("robot_pose", 1000, Pathfinder::poseCallback);
   //ros::Subscriber sub2 = n.subscribe("/current_goal", 1000, goalCallback);
 
   /**
@@ -55,7 +51,7 @@ int main(int argc, char **argv)
    * will exit when Ctrl-C is pressed, or the node is shutdown by the master.
    */
   //ros::spin();
-  ros::Rate loop_rate(controller_frequency_);
+  ros::Rate loop_rate(util.controller_frequency_);
 
   while(ros::ok()){
     ros::spinOnce();
