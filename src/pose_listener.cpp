@@ -22,7 +22,7 @@ int main(int argc, char **argv)
    * NodeHandle destructed will close down the node.
    */
   ros::NodeHandle n;
-   
+
   //basic parameters
   n.param("controller_frequency", util.controller_frequency_, 1.0);
 
@@ -42,9 +42,9 @@ int main(int argc, char **argv)
    * away the oldest ones.
    */
   //ros::Subscriber sub = n.subscribe("odom", 1000, chatterCallback);
-  ros::Subscriber sub2 = n.subscribe("/move_base/current_goal", 1000, Pathfinder::goalCallback);
-  ros::Subscriber sub = n.subscribe("robot_pose", 1000, Pathfinder::poseCallback);
- 
+  ros::Subscriber goal = n.subscribe("/move_base/current_goal", 1000, Pathfinder::goalCallback);
+  ros::Subscriber pose = n.subscribe("robot_pose", 1000, Pathfinder::poseCallback);
+
   /**
    * ros::spin() will enter a loop, pumping callbacks.  With this version, all
    * callbacks will be called from within this thread (the main one).  ros::spin()
@@ -54,7 +54,7 @@ int main(int argc, char **argv)
   ros::Rate loop_rate(util.controller_frequency_);
 
   while(ros::ok()){
-    cout << "stats: " << util.Status(true) << endl;
+//    cout << "stats: " << util.Status(true) << endl;
 //    ROS_INFO("Point A-> x: [%f], y: [%f], z: [%f]", util.A_x, util.A_y, util.A_z);
 
     ros::spinOnce();
